@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React</title>
+<meta charset="UTF-8" />
+
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="D:\Code Base\Amex_GCE\css\chatWidgetFrame.css">
+</head>
+
+<body>
+
+<div id = "root">
+<script type="text/babel">
+var lpCWTagConst = "American Express Chat";
+var RenderInBody = React.createClass({
+
+  componentDidMount: function() {
+    this.chatWizContainer = document.createElement('div');
+    this.chatWizContainer.id = 'lpChatWizContainer';
+	this.chatWizContainer.className = "lp_US";
+    this.chatWizContainer.style.display="none";
+    document.body.appendChild(this.chatWizContainer);
+	this.chatiFrameContainer = document.createElement('div');
+    this.chatiFrameContainer.id = 'lpChatiFrameContainer';
+    this.chatiFrameContainer.className ="lpPosRel";
+    this.chatWizContainer.appendChild(this.chatiFrameContainer);
+	this.chatiFrame = document.createElement("iframe");
+    this.chatiFrame.id = 'lpChatiFrame';
+    this.chatiFrame.className = 'lpChatiFrame';
+	this.chatiFrame.name = 'lpchatframe';
+    this.chatiFrame.src = "https://qwww.aexp-static.com/api/axpi/EW/chatserver/leChatWireFrame2.html?intlvr=2.0&vr0.9.6-b18userloggedin=true"; 
+	//chatiFrame.src = "https://lpdww554.trcw.us.aexp.com:2095/api/axpi/lecode/lpChatWireFrame.html";
+	//chatiFrame.src =   "https://qwww.aexp-static.com/api/axpi/EW/chatserver/leChatWireFrame.html";
+    this.chatiFrame.scrolling = 'no';
+    this.chatiFrame.frameBorder = '0';
+    this.chatiFrame.style.border = "none";
+    this.chatiFrame.style.width = "400px";
+    this.chatiFrame.style.height = "410px";
+    this.chatiFrame.setAttribute('allowtransparency', 'true');
+	this.chatiFrameContainer.appendChild(this.chatiFrame);
+	
+    this._renderLayer();
+  },
+  
+  componentDidUpdate: function() {
+    this._renderLayer();
+  },
+
+
+  componentWillUnmount: function() {
+    React.unmountComponentAtNode(this.chatWizContainer);
+    document.body.removeChild(this.chatWizContainer);
+  },
+
+
+  _renderLayer: function() {
+    ReactDOM.render(this.props.children, this.chatWizContainer);
+  },
+
+
+  render: function() {
+    // Render a placeholder
+    return React.DOM.div(this.props);
+  }
+
+});
+
+var DialogPopup = React.createClass({
+
+	render: function(){
+	return <div><h2>In Dialod Popup</h2></div>;
+	}
+
+});
+
+	function MakeHeader(props){
+	return(<div><div id="lpChatTitleContainer" className="lpRight">
+    <div id="lpChatTitleDragArea" className="lpLeft"><div className="lpLeft"><span className="lpChatTitleContainerLogo lpLeft lpCustSpriteBackground lpCustChatLogoSmall" ></span></div>
+    <div id="lpChatTitleTxt" className="lpLeft lpChatHeaderText noselect" unselectable="on">American Express</div></div>
+    <div className="lpRight lpHeaderActionbuttonsContainer">
+    <div className="lpHeaderActionbuttons lpHoverButton lpPointer" data-msg="Minimize" id="lpChatMinizeBtn" tabIndex="0">
+    <span id="lpChatMinizeBtnImg" className="lpPointer lpCustSpriteBackground lpCustChatIconMinimize" ></span></div>
+    <div className="lpHeaderActionbuttons lpHoverButton lpPointer" data-msg="End Chat" id="lpChatEndChatBtn" tabIndex="0"><span className="lpPointer lpCustSpriteBackground lpCustChatIconClose"></span></div>
+    </div>
+	<div className="lpClear"></div>
+    </div>
+	<div className="lpClear"></div>
+	</div>);
+	}
+
+var Dialog = React.createClass({
+  render: function() {
+    var dialogPopup = <DialogPopup {...this.props} />;
+	var innerhtml = <MakeHeader />;
+    return (
+      <RenderInBody>{innerhtml}</RenderInBody>
+    );
+  }
+});
+
+ReactDOM.render(
+<Dialog />,document.getElementById('root')
+);
+</script>
+
+
+<div>
+
+
+</body>
+
+</html>

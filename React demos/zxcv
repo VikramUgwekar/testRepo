@@ -1,0 +1,9 @@
+var divStyle = {
+width : '20%',
+float : 'right'
+
+};
+var style = {
+width : '20%',
+float : 'right'
+};

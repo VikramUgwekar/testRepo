@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React</title>
+<meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="D:\Code Base\Amex_GCE\css\chatWidgetFrame.css">
+	<link rel="stylesheet" type="text/css" href="D:\Code Base\Amex_GCE\css\chatFrame.css">
+</head>
+
+<body>
+
+<div id = "root">
+<script type="text/babel">
+var chatcurrentTime;
+var chatlastrefreshtime=0;
+var chatlasttimeout=false;
+var isTimerStopped=false;
+var timeoutInterval=null;
+var nuanceFlowFlag= "BAU";
+var lenosToken="";
+var lenoofferCount=0;
+var lenosecCount=0;
+var lenofromReload=false;
+var starttimeLP;
+var expansionFlag="standard_pilot";  
+//var expansionFlag="centurion";  
+var lpTestPopulation="Automation";
+ var jwtValue='';
+  var firsttimelogin ="false";
+
+/*if(window.location.href.indexOf("credit-cards/benefits/view-all")!=-1){
+	if(typeof jQuery != "undefined"){
+		$=jQuery;
+	}
+}*/
+
+/*if(typeof lpTestPopulation != "undefined")
+	lpTestPopulation = "BAU";
+if(typeof lpTestPopulation != "undefined" && lpTestPopulation!="")
+	nuanceFlowFlag = lpTestPopulation.toUpperCase();
+*/
+//var nuanceFlowFlag=lpTestPopulation;
+window.lpCWTagUI = window.lpCWTagUI || {};
+window.lpCWTagConst = window.lpCWTagConst || {};
+//lpCWTagConst.CHAT_BASE_URL = "https://lpdww554.trcw.us.aexp.com:2095";
+lpCWTagConst.CHAT_BASE_URL = "https://qwww.aexp-static.com";
+lpCWTagConst.CHAT_LOCATION_URI = "/api/axpi/lecode/";
+lpCWTagConst.CHAT_LOCATION_URI2 = "";
+lpCWTagConst.LENOCHAT_LOCATION_URI = "/api/axpi/EW/chatserver/customer.html?purl=qwww.americanexpress.com&lpsuid=";
+lpCWTagConst.DEBUG_ENABLE = false; //shows log in console only for Parent page
+lpCWTagConst.LOGGER_NAME_BOOTSTAP = "LPChatBootstrap"; //debug purposes only
+lpCWTagConst.WS_ENABLE=true; //Web Services Enable/not - if enable, you will see spinning wheel
+lpCWTagConst.VERSION="0.9.6-b18"; //the version on this Embedded Window
+lpCWTagConst.lpChatTitleVal = "American Express Chat";
+lpCWTagConst.lpChatTitleDock = "Dock";
+lpCWTagConst.lpChatTitleUndock = "Un-Dock";
+lpCWTagConst.lpChatTitleMinimize = "Minimize";
+lpCWTagConst.lpChatTitleMaximize = "Maximize";
+lpCWTagConst.lpChatTitleClose = "Close";
+lpCWTagConst.lpNewChatMsgArrive = "New Chat Message Has Arrived"; //change the new messge when flashing title
+lpCWTagConst.enableSiteTitleFlashing = true;
+lpCWTagConst.enableDockUnDock = true; //enable if you want to definitely show the dock/undock
+lpCWTagConst.lpTitleFlashingTimer; //timer to use for title flashing
+lpCWTagConst.widgetMarginRight = "32"; //indicates margin right
+
+class Button extends React.Component{
+render(){
+	return(
+	<div style={{width: '50%' ,float : 'right'}}>
+	<button onClick = {this.props.onClickFunction}><img src="C:\Users\471241\Desktop\React demos\pill-button.png"/></button>
+	</div>
+	);
+}
+}
+
+function WindowOut(props){
+
+return (<div id="lpChatWizFrameContainer">
+
+	<div id="lpChatFrameContainer">
+	<div id="lpChatTitleContainer" class="lpRight">
+     <div id="lpChatTitleDragArea" class="lpLeft"><div class="lpLeft"><span class="lpChatTitleContainerLogo lpLeft lpCustSpriteBackground lpCustChatLogoSmall" ></span></div>
+     <div id="lpChatTitleTxt" class="lpLeft lpChatHeaderText noselect" unselectable="on">American Express Chat</div></div>
+     <div class="lpRight lpHeaderActionbuttonsContainer">
+     <div class="lpHeaderActionbuttons lpHoverButton lpPointer" data-msg="Minimize" id="lpChatMinizeBtn" tabindex="0">
+     <span id="lpChatMinizeBtnImg" class="lpPointer lpCustSpriteBackground lpCustChatIconMinimize" ></span></div>
+     <div class="lpHeaderActionbuttons lpHoverButton lpPointer" data-msg="End Chat" id="lpChatEndChatBtn" tabindex="0"><span class="lpPointer lpCustSpriteBackground lpCustChatIconClose"></span></div>
+     </div><div class="lpClear"></div>
+    </div><div class="lpClear"></div>
+		<div id="lpChatBodySection" class="lpHeight365" ></div>
+		<div id="lpChatFooterSection" class='lpMiddleSection'>
+			<div class="lpPadLeftRight19">
+				<div id="lpChatFooterMsg" class="lpLeft lpChatFooterWhite">
+				</div>
+				<div class="lpRight">
+					<div id="lpPreChatCloseBtn" class='lpTextCenter lpPointer lpBlueButton'>Close</div>
+				</div>
+				<div class="lpClear"></div>
+			</div>
+		</div>
+	</div>
+	<div id='sendexitsurvey'></div>
+       <div id='notificationDialog' title='Notification'></div>
+</div>
+
+);
+
+}
+
+function WindowNull(props){
+
+return(
+<div>
+</div>
+);
+
+} 
+
+
+function Window(props){
+	var input = props.result;
+	  if (input) {
+    return <WindowOut />;
+  }
+  return <WindowNull />;
+}
+	
+
+class App extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {showWindow: false};
+		this.isClicked = this.isClicked.bind(this);
+}
+	isClicked = () =>{
+	this.setState((prevState) => ({
+      showWindow: !prevState.showWindow
+    }));
+	};
+
+render(){
+	return(
+	<div>
+	<Window result = {this.state.showWindow}/>
+	<Button onClickFunction={this.isClicked}/>
+	</div>
+	);
+}
+
+}
+
+ReactDOM.render(
+<div>
+  <App />
+  </div>,
+  document.getElementById('root')
+);
+</script>
+
+
+<div>
+
+
+</body>
+
+</html>

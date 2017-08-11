@@ -1,0 +1,24 @@
+	   function getData(data) {
+	       console.log(data);
+	       var length = data.length;
+	       var count1 = 0;
+	       var count2 = 0;
+	       var out = 0;
+		   if(data != null || length ==0){
+	       for (var i = 0; i <= length; i++) {
+
+	           if (data[i] <= 6 && data[i] >= 0) {
+	               count1++;
+	           }
+	           if (data[i] == 9 || data[i] == 10) {
+	               count2++
+	           }
+	       }
+		   out = (Math.abs(count2 - count1) / length) * 100;
+		   }
+		   else{
+		   alert('inappropriate data')
+		   
+		   }
+	       
+	   }

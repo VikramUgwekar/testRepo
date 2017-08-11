@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+
+    <button onclick="getData()">try me</button>
+    <button onclick="myFunction()">try me</button>
+    <script>
+        function myFunction() {
+            var d = new Date();
+            var n = d.getTime();
+            var minus = 30 * 6000;
+            var out = n - minus;
+            document.getElementById("demo").innerHTML = n;
+            document.getElementById("demo2").innerHTML = out;
+
+            var inpStrz = '{"start": {"from": "1499745600000", "to":"1499789940000"}}';
+
+            var oAuthHeader = 'OAuth oauth_version="1.0"' +
+                ', oauth_signature_method="HMAC-SHA1"' +
+                ', oauth_nonce="VeOKT0cO522VPoe"' +
+                ', oauth_timestamp="1500628311"' +
+                ', oauth_consumer_key="7c9a8bb28ed04733a18aee522428ff92"' +
+                ', oauth_token="10dca0f6eeb34dbf9b6f697ead027561"' +
+                ', oauth_signature="%2FU5XTl5YOksxkYcr3PthvfOLITM%3D"';
+
+            $.ajax({
+                url: 'https://va.msghist.liveperson.net/messaging_history/api/account/72772122/conversations/search?limit=5&offset=0',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": oAuthHeader
+                },
+                type: "POST",
+                async: true,
+                crossDomain: true,
+                contentType: "application/json",
+                data: inpStrz,
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function() {
+                    alert("Network error");
+                }
+            });
+        }
+
+        function getData() {
+            $.ajax({
+                url: "https://lpdww554.trcw.us.aexp.com:2095/api/axpi/lecodeWindowDesign/WaitTime/waittimeresponse.js",
+                dataType: 'jsonp',
+                jsonpCallback: 'waitTimeResponse',
+                jsonp: false,
+            });
+
+        }
+
+        function waitTimeResponse(data) {
+            console.log(data);
+            var length = data.conversationHistoryRecords.length;
+            console.log(data.conversationHistoryRecords[0].interactions[0].interactionTimeL);
+			console.log(data.conversationHistoryRecords[0].interactions.length);
+            var i = 0;
+            var avgTime = 0;
+            for (i = 0; i < length; i++) {
+                avgTime = avgTime + (data.conversationHistoryRecords[i].interactions[0].interactionTimeL - data.conversationHistoryRecords[i].info.startTimeL);
+                console.log(avgTime);
+            }
+
+            var out = avgTime / length;
+            console.log(out / 1000);
+
+        }
+    </script>
+</body>
+
+</html>

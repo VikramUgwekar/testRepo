@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>React</title>
+<meta charset="UTF-8" />
+
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="D:\Code Base\Amex_GCE\css\chatWidgetFrame.css">
+</head>
+
+<body>
+
+<div id = "root">
+<script type="text/babel">
+var divStyle = {
+width : '20%',
+float : 'right'
+
+};
+var style = {
+width : '20%',
+float : 'right'
+};
+
+const Title = ({todoCount}) => {
+  return (
+    <div>
+       <div>
+          <h1>to-do ({todoCount})</h1>
+       </div>
+    </div>
+  );
+}
+
+var img="D:\pill-button.png";
+var MyLabel = React.createClass({
+  render: function() {
+    return React.createElement("label", {className: "label"},
+      React.createElement("span", {className: "label"}, this.props.label),
+      this.props.children
+    );
+  }
+});
+
+var App = React.createClass({
+  render: function() {
+    return React.createElement(MyLabel, {label: "Here is the label prop"},
+      React.createElement("div", {},
+        React.createElement("input", {type: "text", placeholder: "And here is a child"}),
+		React.createElement("button", {value: "Input"}),
+      ),
+	   this.props.children
+    );
+  }
+}); 
+
+var NextApp = React.createClass({
+	render : function(){
+	return React.createElement(App,
+	React.createElement("div", {id: "new", style:{divStyle}},
+		React.createElement("h2", {value :"React test"}),
+		React.createElement("img", {src:{img} , style:{style}})
+	)
+	);
+	}
+});
+ReactDOM.render(
+<NextApp />,document.getElementById('root')
+);
+</script>
+
+
+<div>
+
+
+</body>
+
+</html>

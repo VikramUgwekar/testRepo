@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+
+    <button onclick="getData([1,2,652,85,875,75,2,6,6,89,8,74,69,898,1,8,99])">try me</button>
+	   <script>
+		   function getData(data) {
+	       console.log(data);
+	       var count1 = 0;
+	       var count2 = 0;
+	       var out = 0;
+		   if(data != null){
+		      var length = data.length;
+	       for (var i = 0; i <= length; i++) {
+
+	           if (data[i] <= 6 && data[i] >= 0) {
+	               count1++;
+	           }
+	           if (data[i] == 9 || data[i] == 10) {
+	               count2++
+	           }
+	       }
+		   out = (Math.abs(count2 - count1) / length) * 100;
+		   document.getElementById('demo').innerHTML=out
+		   }
+		   else{
+		   alert('inappropriate data')
+		   
+		   }
+	       
+	   }
+	    </script>
+</body>
+
+</html>
