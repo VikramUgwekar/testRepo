@@ -2,9 +2,15 @@ package com.collection.test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class CollectionTest {
@@ -41,6 +47,24 @@ public class CollectionTest {
 	e4.setId(6);;
 	e4.setLast_name("Ugwekar");
 	
+	Map<String, Student> studentMap = new HashMap<>();
+	
+	
+	
+	studentMap.put("Science", e);
+	studentMap.put("Commerce", e1);
+	studentMap.put("Literature", e2);
+	studentMap.put("Mathemtaics", e3);
+	studentMap.put("Science", e);
+	
+	Map<String, Student> studentTreeMap = new TreeMap<String, Student>(studentMap);
+	
+	Map<String, Student> studentCopmMap = new TreeMap<String, Student>((Comparator<String>) (o1, o2) -> o1.compareTo(o2));
+	studentCopmMap.putAll(studentTreeMap);
+	CollectionTest collectionTest = new CollectionTest();
+	collectionTest.printMap(studentMap);
+	collectionTest.printMap(studentTreeMap);
+	collectionTest.printMap(studentCopmMap);
 	
 	
 	Set<Student> students = new HashSet<>();
@@ -100,4 +124,17 @@ public class CollectionTest {
 	
 	}
 
+	
+	public void printMap(Map<String, Student> map){
+		
+		System.out.println("---------Map Output-+--------");
+		System.out.println(map.size());
+		for(Map.Entry<String, Student> entry : map.entrySet()){
+			String key = entry.getKey();
+			Student value = entry.getValue();
+			
+			System.out.println("Key : "+key+"  "+"Value : "+value.getFirst_name());
+			
+		}
+		}
 }
