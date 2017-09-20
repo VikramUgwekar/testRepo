@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+#container .content {
+    display: none;
+    padding : 5px;
+
+}
+
+#container{
+	width:500px;
+    margin: auto;
+    border: 3px solid #73AD21;
+
+}
+</style>
+<body>
+	<div>
+<button onclick="collapse()">Collapse</button>
+<div id = "container"></div>
+<script type="text/javascript">
+function collapse() {
+
+    var data = [
+	{
+		"offerId": "A00000EQFN","firstname": "SAIRAJESH", "lastname": "GUGGILAM", "cardname": "Sairajesh Guggilam", "dateofbirth": "12/12/1212", "ssnNumber": "111-11-1111","stepNo":"6","suid": "s123415","cmAgreesTerms":"YES"
+	},
+	
+	{
+		"offerId": "A00000EQFN","firstname": "VIKRAM", "lastname": "UGWEKAR", "cardname": "Sairajesh Guggilam", "dateofbirth": "12/12/1212", "ssnNumber": "111-11-1111","stepNo":"6","suid": "s123415","cmAgreesTerms":"YES"
+	}, 
+{
+		"offerId": "A00000EQFN","firstname": "NANDINI", "lastname": "", "cardname": "Sairajesh Guggilam", "dateofbirth": "12/12/1212", "ssnNumber": "111-11-1111","stepNo":"6","suid": "s123415","cmAgreesTerms":"YES"
+	},
+	
+	{
+		"offerId": "A00000EQFN","firstname": "SRINIVAS", "lastname": "Setti", "cardname": "Sairajesh Guggilam", "dateofbirth": "12/12/1212", "ssnNumber": "111-11-1111","stepNo":"6","suid": "s123415","cmAgreesTerms":"YES"
+	}
+	] ;
+
+    $.off().each(data, function (index, value) {
+        $("#container").append($("<div/>",{"class" : "header", "id" : index}).append("<span/>").text(" + "+value.firstname+" "+value.lastname)).append($("<div/>", {"class" : "content"}).append($("<p/>").text("Name to appear on Card : "+value.cardname).append("<br />"+"Date of Birth : "+value.dateofbirth).append("<br />"+"Social Security No : "+value.ssnNumber))	);
+    });
+	$(".header").click(function () {
+
+    $header = $(this);
+	var name = $header.html();
+	var id = $header.attr('id');
+    //$("#"+id).show().siblings("div").hide();
+	
+	var elementsHeader = document.querySelectorAll('.header');
+	var elementsContent = document.querySelectorAll('.content');
+	
+	
+	
+	console.log(elementsHeader[0].innerHTML);
+    //getting the next element
+    $content = $header.next();
+	console.log($(this));
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(300, function () {
+	 
+        //execute this after slideToggle is done
+        //change text of header based on visibility of content div
+        $header.text(function () {
+            //change text based on condition
+			for (var i = 0 ;i < elementsHeader.length; i++){
+		
+		if (elementsHeader[i].id != id){
+			
+			$(elementsContent[i]).slideUp( 500 ).delay( 500 );
+			
+			var n = elementsHeader[i].innerHTML;
+			n=setCharAt(n,1,'+');
+			console.log(name);
+			elementsHeader[i].innerHTML = n;
+		
+		}
+	}
+            if($content.is(":visible")){
+			var n = name;
+			n = setCharAt(n,1,'-');
+			console.log(name);
+			return n;
+			
+			}
+			else if(!$content.is(":visible")){
+			var n = name;
+			n=setCharAt(n,1,'+');
+			console.log(name);
+			return n;
+			}
+        });
+    });
+
+});
+function setCharAt(str,index,chr) {
+	if(index > str.length-1) return str;
+	return str.substr(0,index) + chr + str.substr(index+1);
+}
+}
+		</script>
+	</div>
+</body>
+
+</html>
